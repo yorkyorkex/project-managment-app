@@ -1,126 +1,169 @@
 'use client';
 
-import Layout from '@/components/Layout';
-import Card from '@/components/ui/Card';
-import LoadingSpinner from '@/components/ui/LoadingSpinner';
-import ErrorMessage from '@/components/ui/ErrorMessage';
-import ProtectedRoute from '@/components/ProtectedRoute';
-import { useApp } from '@/contexts/AppContext';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
-export default function Dashboard() {
-  const { state, actions } = useApp();
-  const stats = [
-    { title: 'Total Users', value: '2,543', change: '+12%', trend: 'up' },
-    { title: 'Revenue', value: '$45,231', change: '+8%', trend: 'up' },
-    { title: 'Orders', value: '1,234', change: '-3%', trend: 'down' },
-    { title: 'Conversion Rate', value: '3.24%', change: '+0.5%', trend: 'up' }
-  ];
+export default function HomePage() {
+  const { status } = useSession();
+  const router = useRouter();
 
-  const recentActivity = [
-    { user: 'John Doe', action: 'Created new project', time: '2 minutes ago' },
-    { user: 'Jane Smith', action: 'Updated profile', time: '15 minutes ago' },
-    { user: 'Mike Johnson', action: 'Completed task', time: '1 hour ago' },
-    { user: 'Sarah Wilson', action: 'Left a comment', time: '2 hours ago' }
-  ];
+  // If user is already logged in, redirect to dashboard
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.push('/dashboard');
+    }
+  }, [status, router]);
 
-  if (state.isLoading) {
+  if (status === 'loading') {
     return (
-      <Layout>
-        <div className="dashboard">
-          <div className="loading-container" style={{ textAlign: 'center', padding: '2rem' }}>
-            <LoadingSpinner size="lg" />
-            <p style={{ marginTop: '1rem' }}>Loading dashboard...</p>
-          </div>
-        </div>
-      </Layout>
+      <div className="loading-container" style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        flexDirection: 'column'
+      }}>
+        <div style={{ marginBottom: '1rem' }}>Loading...</div>
+      </div>
     );
   }
 
   return (
-    <ProtectedRoute>
-      <Layout>
-      <div className="dashboard">
-        {state.error && (
-          <ErrorMessage 
-            message={state.error} 
-            onDismiss={() => actions.setError(null)} 
-          />
-        )}
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+      color: 'white',
+      padding: '2rem'
+    }}>
+      <div style={{
+        textAlign: 'center',
+        maxWidth: '600px',
+        width: '100%'
+      }}>
+        <h1 style={{
+          fontSize: '3rem',
+          marginBottom: '1rem',
+          background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text'
+        }}>
+          Project Management App
+        </h1>
         
-        <div className="dashboard-header">
-          <h1>Dashboard Overview</h1>
-          <p>Welcome back! Here&apos;s what&apos;s happening with your business today.</p>
+        <p style={{
+          fontSize: '1.2rem',
+          marginBottom: '3rem',
+          color: '#94a3b8'
+        }}>
+          A modern project management solution built with Next.js and NextAuth
+        </p>
+
+        <div style={{
+          display: 'flex',
+          gap: '1rem',
+          justifyContent: 'center',
+          flexWrap: 'wrap'
+        }}>
+          <Link 
+            href="/login"
+            style={{
+              display: 'inline-block',
+              padding: '1rem 2rem',
+              backgroundColor: '#3b82f6',
+              color: 'white',
+              textDecoration: 'none',
+              borderRadius: '0.5rem',
+              fontWeight: '600',
+              transition: 'all 0.2s',
+              border: 'none'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
+            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#3b82f6'}
+          >
+            🚀 Get Started
+          </Link>
+          
+          <Link 
+            href="/dashboard"
+            style={{
+              display: 'inline-block',
+              padding: '1rem 2rem',
+              backgroundColor: 'transparent',
+              color: '#3b82f6',
+              textDecoration: 'none',
+              borderRadius: '0.5rem',
+              fontWeight: '600',
+              border: '2px solid #3b82f6',
+              transition: 'all 0.2s'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = '#3b82f6';
+              e.currentTarget.style.color = 'white';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+              e.currentTarget.style.color = '#3b82f6';
+            }}
+          >
+            📊 View Demo
+          </Link>
         </div>
 
-        <div className="stats-grid">
-          {stats.map((stat, index) => (
-            <Card key={index} className="stat-card">
-              <div className="stat-content">
-                <div className="stat-info">
-                  <h3 className="stat-title">{stat.title}</h3>
-                  <p className="stat-value">{stat.value}</p>
-                </div>
-                <div className={`stat-change ${stat.trend}`}>
-                  <span className="stat-change-value">{stat.change}</span>
-                  <span className="stat-trend-icon">
-                    {stat.trend === 'up' ? '↗️' : '↘️'}
-                  </span>
-                </div>
-              </div>
-            </Card>
-          ))}
+        <div style={{
+          marginTop: '4rem',
+          padding: '2rem',
+          backgroundColor: 'rgba(59, 130, 246, 0.1)',
+          borderRadius: '1rem',
+          border: '1px solid rgba(59, 130, 246, 0.2)'
+        }}>
+          <h3 style={{ marginBottom: '1rem', color: '#3b82f6' }}>✨ Features</h3>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '1rem',
+            textAlign: 'left'
+          }}>
+            <div>
+              <strong>🔐 Authentication</strong>
+              <p style={{ fontSize: '0.9rem', color: '#94a3b8', margin: '0.5rem 0 0 0' }}>
+                Secure login with NextAuth
+              </p>
+            </div>
+            <div>
+              <strong>📱 Responsive Design</strong>
+              <p style={{ fontSize: '0.9rem', color: '#94a3b8', margin: '0.5rem 0 0 0' }}>
+                Works on all devices
+              </p>
+            </div>
+            <div>
+              <strong>🌙 Dark Theme</strong>
+              <p style={{ fontSize: '0.9rem', color: '#94a3b8', margin: '0.5rem 0 0 0' }}>
+                Modern dark interface
+              </p>
+            </div>
+            <div>
+              <strong>⚡ Fast Performance</strong>
+              <p style={{ fontSize: '0.9rem', color: '#94a3b8', margin: '0.5rem 0 0 0' }}>
+                Built with Next.js 15
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="dashboard-content">
-          <Card title="Recent Activity" className="activity-card">
-            <div className="activity-list">
-              {recentActivity.map((activity, index) => (
-                <div key={index} className="activity-item">
-                  <div className="activity-info">
-                    <span className="activity-user">{activity.user}</span>
-                    <span className="activity-action">{activity.action}</span>
-                  </div>
-                  <span className="activity-time">{activity.time}</span>
-                </div>
-              ))}
-            </div>
-          </Card>
-
-          <Card title="Quick Actions" className="actions-card">
-            <div className="quick-actions">
-              <button 
-                className="action-btn add-user"
-                onClick={() => window.location.href = '/users'}
-              >
-                <span className="action-icon">👥</span>
-                <span>Add User</span>
-              </button>
-              <button 
-                className="action-btn view-reports"
-                onClick={() => window.location.href = '/projects'}
-              >
-                <span className="action-icon">📊</span>
-                <span>View Reports</span>
-              </button>
-              <button 
-                className="action-btn settings"
-                onClick={() => window.location.href = '/settings'}
-              >
-                <span className="action-icon">⚙️</span>
-                <span>Settings</span>
-              </button>
-              <button 
-                className="action-btn create-project"
-                onClick={() => window.location.href = '/projects'}
-              >
-                <span className="action-icon">📝</span>
-                <span>Create Project</span>
-              </button>
-            </div>
-          </Card>
+        <div style={{
+          marginTop: '2rem',
+          fontSize: '0.9rem',
+          color: '#64748b'
+        }}>
+          Demo credentials: <strong>admin@example.com</strong> / <strong>password</strong>
         </div>
       </div>
-    </Layout>
-    </ProtectedRoute>
+    </div>
   );
 }

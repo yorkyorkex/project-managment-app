@@ -30,7 +30,7 @@ export default function Login() {
         // @ts-expect-error: NextAuth session user doesn't include role by default
         role: session.user?.role || 'User'
       });
-      router.push('/');
+      router.push('/dashboard');
     }
   }, [state.user, actions, router, session]);
 
@@ -69,7 +69,7 @@ export default function Login() {
     actions.setError(null);
     
     try {
-      await signIn('google', { callbackUrl: '/' });
+      await signIn('google', { callbackUrl: '/dashboard' });
     } catch {
       actions.setError('Failed to sign in with Google');
       setIsLoading(false);

@@ -18,6 +18,9 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   useEffect(() => {
     if (status === 'loading') return; // Still loading
 
+    // If user is already set in app context (demo mode), allow access
+    if (state.user) return;
+
     if (status === 'unauthenticated') {
       router.push('/login');
       return;
@@ -49,7 +52,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     );
   }
 
-  if (status === 'unauthenticated') {
+  if (status === 'unauthenticated' && !state.user) {
     return null;
   }
 

@@ -80,24 +80,17 @@ export default function Login() {
     setIsLoading(true);
     actions.setError(null);
     
-    try {
-      // Simulate direct login with demo credentials
-      const result = await signIn('credentials', {
+    // For Vercel demo: directly set demo user and redirect
+    setTimeout(() => {
+      actions.setUser({
+        id: 'demo-user-1',
+        name: 'Demo User',
         email: 'admin@example.com',
-        password: 'password',
-        redirect: false,
+        role: 'Administrator'
       });
-
-      if (result?.error) {
-        actions.setError('Direct login failed');
-      } else {
-        // Session will be handled by useEffect
-      }
-    } catch {
-      actions.setError('An error occurred during direct login');
-    } finally {
+      router.push('/dashboard');
       setIsLoading(false);
-    }
+    }, 500); // Small delay to show loading state
   };
 
   return (
@@ -181,12 +174,15 @@ export default function Login() {
           className="direct-login-button"
           style={{ 
             marginTop: '1rem',
-            backgroundColor: 'rgba(34, 197, 94, 0.1)',
-            borderColor: 'rgba(34, 197, 94, 0.3)',
-            color: 'rgb(34, 197, 94)'
+            backgroundColor: 'rgba(34, 197, 94, 0.15)',
+            borderColor: 'rgba(34, 197, 94, 0.5)',
+            color: 'rgb(34, 197, 94)',
+            fontSize: '16px',
+            fontWeight: '600',
+            padding: '1rem 2rem'
           }}
         >
-          🚀 Demo Login (No Credentials Required)
+          🚀 DEMO MODE - Skip Login & Enter Dashboard
         </Button>
 
         <div className="signup-link">

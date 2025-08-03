@@ -159,9 +159,15 @@ export default function HomePage() {
         <div style={{
           marginTop: '2rem',
           fontSize: '0.9rem',
-          color: '#64748b'
+          color: '#64748b',
+          textAlign: 'center'
         }}>
-          Demo credentials: <strong>admin@example.com</strong> / <strong>password</strong>
+          <div style={{ marginBottom: '0.5rem' }}>
+            Demo credentials: <strong>admin@example.com</strong> / <strong>password</strong>
+          </div>
+          <div style={{ fontSize: '0.8rem', color: '#475569' }}>
+            ⚡ Or use the "DEMO MODE" button to skip login entirely
+          </div>
         </div>
       </div>
     </div>

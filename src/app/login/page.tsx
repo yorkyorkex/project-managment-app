@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { signIn, getSession, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import ErrorMessage from '@/components/ui/ErrorMessage';
@@ -10,7 +10,7 @@ import { useApp } from '@/contexts/AppContext';
 
 export default function Login() {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const { state, actions } = useApp();
   const [credentials, setCredentials] = useState({
     email: '',
@@ -26,12 +26,12 @@ export default function Login() {
         id: session.user?.id || '',
         name: session.user?.name || '',
         email: session.user?.email || '',
-        // @ts-ignore
+        // @ts-expect-error
         role: session.user?.role || 'User'
       });
       router.push('/');
     }
-  }, [session?.user?.id, state.user, actions.setUser, router]);
+  }, [session?.user?.id, state.user, actions, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +56,7 @@ export default function Login() {
       } else {
         // Session will be handled by useEffect
       }
-    } catch (error) {
+    } catch {
       actions.setError('An error occurred during sign in');
     } finally {
       setIsLoading(false);
@@ -69,7 +69,7 @@ export default function Login() {
     
     try {
       await signIn('google', { callbackUrl: '/' });
-    } catch (error) {
+    } catch {
       actions.setError('Failed to sign in with Google');
       setIsLoading(false);
     }
@@ -150,7 +150,7 @@ export default function Login() {
         </Button>
 
         <div className="signup-link">
-          <p>Don't have an account? <button className="link-button" onClick={handleGoogleSignIn}>Sign up with Google</button></p>
+          <p>Don&apos;t have an account? <button className="link-button" onClick={handleGoogleSignIn}>Sign up with Google</button></p>
         </div>
 
         <div className="login-footer">

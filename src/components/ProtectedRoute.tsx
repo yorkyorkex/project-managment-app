@@ -29,11 +29,11 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
         id: session.user?.id || '',
         name: session.user?.name || '',
         email: session.user?.email || '',
-        // @ts-ignore
+        // @ts-expect-error
         role: session.user?.role || 'User'
       });
     }
-  }, [status, session?.user?.id, state.user, actions.setUser, router]);
+  }, [status, session?.user?.id, state.user, actions, router]);
 
   if (status === 'loading') {
     return (

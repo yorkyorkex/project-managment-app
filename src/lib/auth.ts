@@ -41,12 +41,12 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.sub || ""
-        // @ts-ignore
+        // @ts-expect-error
         session.user.role = token.role || "User"
       }
       return session
     },
-    async signIn({ user, account, profile }) {
+    async signIn() {
       // Allow all sign-ins for demo purposes
       // Add custom logic here for user validation
       return true

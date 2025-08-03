@@ -7,40 +7,25 @@ export function useTheme() {
   const { state, actions } = useApp();
 
   useEffect(() => {
-    // Load theme from localStorage on mount
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | 'system' | null;
-    if (savedTheme && savedTheme !== state.theme) {
-      actions.setTheme(savedTheme);
+    // Always use dark theme
+    if (state.theme !== 'dark') {
+      actions.setTheme('dark');
     }
-  }, []);
+  }, [actions, state.theme]);
 
   useEffect(() => {
-    // Apply theme to document
+    // Apply dark theme to document
     const root = document.documentElement;
-    
-    // Save theme to localStorage
-    localStorage.setItem('theme', state.theme);
-    
-    // Apply theme attribute
-    root.setAttribute('data-theme', state.theme);
-    
-    // Apply system theme detection for 'system' theme
-    if (state.theme === 'system') {
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      const systemTheme = mediaQuery.matches ? 'dark' : 'light';
-      root.setAttribute('data-theme', 'system');
-    }
-  }, [state.theme]);
+    root.setAttribute('data-theme', 'dark');
+    localStorage.setItem('theme', 'dark');
+  }, []);
 
   const toggleTheme = () => {
-    const themes: ('light' | 'dark' | 'system')[] = ['dark', 'light', 'system'];
-    const currentIndex = themes.indexOf(state.theme);
-    const nextIndex = (currentIndex + 1) % themes.length;
-    actions.setTheme(themes[nextIndex]);
+    // No toggle needed, always dark
   };
 
-  const setTheme = (theme: 'light' | 'dark' | 'system') => {
-    actions.setTheme(theme);
+  const setTheme = () => {
+    // No setter needed, always dark
   };
 
   return {

@@ -14,7 +14,7 @@ interface UseApiReturn<T> extends UseApiState<T> {
   mutate: (newData: T) => void;
 }
 
-export function useApi<T = any>(
+export function useApi<T = unknown>(
   apiFunction: () => Promise<{ data?: T; error?: string }>,
   immediate = true
 ): UseApiReturn<T> {
@@ -64,7 +64,7 @@ export function useApi<T = any>(
     if (immediate) {
       fetchData();
     }
-  }, []);
+  }, [fetchData, immediate]);
 
   return {
     ...state,
@@ -73,7 +73,7 @@ export function useApi<T = any>(
   };
 }
 
-export function useMutation<TData = any, TVariables = any>(
+export function useMutation<TData = unknown, TVariables = unknown>(
   mutationFunction: (variables: TVariables) => Promise<{ data?: TData; error?: string }>
 ) {
   const { actions } = useApp();

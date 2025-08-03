@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useApp } from '@/contexts/AppContext';
-import ThemeToggle from './ThemeToggle';
 
 interface HeaderProps {
   onMenuToggle?: () => void;
@@ -42,7 +41,6 @@ const Header = ({ onMenuToggle }: HeaderProps) => {
           <h1 className="header-title">Dashboard</h1>
         </div>
         <div className="header-actions">
-          <ThemeToggle />
           <button className="notification-btn">🔔</button>
           <div className="user-profile" ref={dropdownRef}>
             <button 

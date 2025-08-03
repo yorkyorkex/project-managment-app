@@ -19,7 +19,7 @@ export default function HelpPage() {
               <div style={{ marginTop: '2rem' }}>
                 <h3 style={{ marginBottom: '1rem', color: 'var(--foreground)' }}>How do I reset my password?</h3>
                 <p style={{ marginBottom: '2rem', color: 'var(--muted)' }}>
-                  You can reset your password by going to the login page and clicking "Forgot Password".
+                  You can reset your password by going to the login page and clicking &quot;Forgot Password&quot;.
                 </p>
                 
                 <h3 style={{ marginBottom: '1rem', color: 'var(--foreground)' }}>How do I change my profile information?</h3>

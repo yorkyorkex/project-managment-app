@@ -2,7 +2,7 @@
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000/api';
 
-interface ApiResponse<T = any> {
+interface ApiResponse<T = unknown> {
   data?: T;
   error?: string;
   message?: string;
@@ -18,7 +18,7 @@ class ApiError extends Error {
   }
 }
 
-async function apiRequest<T = any>(
+async function apiRequest<T = unknown>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<ApiResponse<T>> {
@@ -54,16 +54,16 @@ async function apiRequest<T = any>(
 // User API functions
 export const userApi = {
   getProfile: () => apiRequest('/users/profile'),
-  updateProfile: (userData: any) => apiRequest('/users/profile', {
+  updateProfile: (userData: unknown) => apiRequest('/users/profile', {
     method: 'PUT',
     body: JSON.stringify(userData),
   }),
   getUsers: () => apiRequest('/users'),
-  createUser: (userData: any) => apiRequest('/users', {
+  createUser: (userData: unknown) => apiRequest('/users', {
     method: 'POST',
     body: JSON.stringify(userData),
   }),
-  updateUser: (id: string, userData: any) => apiRequest(`/users/${id}`, {
+  updateUser: (id: string, userData: unknown) => apiRequest(`/users/${id}`, {
     method: 'PUT',
     body: JSON.stringify(userData),
   }),
@@ -76,11 +76,11 @@ export const userApi = {
 export const projectApi = {
   getProjects: () => apiRequest('/projects'),
   getProject: (id: string) => apiRequest(`/projects/${id}`),
-  createProject: (projectData: any) => apiRequest('/projects', {
+  createProject: (projectData: unknown) => apiRequest('/projects', {
     method: 'POST',
     body: JSON.stringify(projectData),
   }),
-  updateProject: (id: string, projectData: any) => apiRequest(`/projects/${id}`, {
+  updateProject: (id: string, projectData: unknown) => apiRequest(`/projects/${id}`, {
     method: 'PUT',
     body: JSON.stringify(projectData),
   }),

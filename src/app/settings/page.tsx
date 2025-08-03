@@ -8,11 +8,9 @@ import Input from '@/components/ui/Input';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { useApp } from '@/contexts/AppContext';
-import { useTheme } from '@/hooks/useTheme';
 
 export default function Settings() {
   const { state, actions } = useApp();
-  const { theme, setTheme } = useTheme();
   
   const [profile, setProfile] = useState({
     name: state.user?.name || '',
@@ -23,7 +21,6 @@ export default function Settings() {
 
   const [preferences, setPreferences] = useState({
     notifications: state.notifications,
-    theme: theme,
     language: 'English',
     timezone: 'UTC-5'
   });
@@ -65,7 +62,6 @@ export default function Settings() {
   const handlePreferencesSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     actions.setNotifications(preferences.notifications);
-    setTheme(preferences.theme as 'light' | 'dark' | 'system');
     console.log('Preferences updated:', preferences);
   };
 
@@ -137,18 +133,6 @@ export default function Settings() {
                   />
                   <span className="checkbox-text">Email notifications</span>
                 </label>
-              </div>
-              <div className="form-group">
-                <label className="input-label">Theme</label>
-                <select
-                  value={preferences.theme}
-                  onChange={(e) => setPreferences({ ...preferences, theme: e.target.value })}
-                  className="input"
-                >
-                  <option value="dark">Dark Mode</option>
-                  <option value="light">Light Mode</option>
-                  <option value="system">System</option>
-                </select>
               </div>
               <div className="form-row">
                 <div className="form-group">

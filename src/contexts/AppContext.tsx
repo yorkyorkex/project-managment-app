@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useReducer, ReactNode, useCallback, useMemo } from 'react';
+import { createContext, useContext, useReducer, ReactNode, useMemo } from 'react';
 
 interface User {
   id: string;
@@ -14,7 +14,7 @@ interface AppState {
   user: User | null;
   isLoading: boolean;
   error: string | null;
-  theme: 'light' | 'dark' | 'system';
+  theme: 'dark';
   notifications: boolean;
 }
 
@@ -22,7 +22,7 @@ type AppAction =
   | { type: 'SET_USER'; payload: User }
   | { type: 'SET_LOADING'; payload: boolean }
   | { type: 'SET_ERROR'; payload: string | null }
-  | { type: 'SET_THEME'; payload: 'light' | 'dark' | 'system' }
+  | { type: 'SET_THEME'; payload: 'dark' }
   | { type: 'SET_NOTIFICATIONS'; payload: boolean }
   | { type: 'LOGOUT' };
 
@@ -60,7 +60,7 @@ interface AppContextType {
     setUser: (user: User) => void;
     setLoading: (loading: boolean) => void;
     setError: (error: string | null) => void;
-    setTheme: (theme: 'light' | 'dark' | 'system') => void;
+    setTheme: (theme: 'dark') => void;
     setNotifications: (enabled: boolean) => void;
     logout: () => void;
   };
@@ -75,7 +75,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setUser: (user: User) => dispatch({ type: 'SET_USER', payload: user }),
     setLoading: (loading: boolean) => dispatch({ type: 'SET_LOADING', payload: loading }),
     setError: (error: string | null) => dispatch({ type: 'SET_ERROR', payload: error }),
-    setTheme: (theme: 'light' | 'dark' | 'system') => dispatch({ type: 'SET_THEME', payload: theme }),
+    setTheme: (theme: 'dark') => dispatch({ type: 'SET_THEME', payload: theme }),
     setNotifications: (enabled: boolean) => dispatch({ type: 'SET_NOTIFICATIONS', payload: enabled }),
     logout: () => dispatch({ type: 'LOGOUT' })
   }), []);

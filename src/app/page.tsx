@@ -49,7 +49,7 @@ export default function Dashboard() {
         
         <div className="dashboard-header">
           <h1>Dashboard Overview</h1>
-          <p>Welcome back! Here's what's happening with your business today.</p>
+          <p>Welcome back! Here&apos;s what&apos;s happening with your business today.</p>
         </div>
 
         <div className="stats-grid">

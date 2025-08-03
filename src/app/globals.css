@@ -305,6 +305,7 @@ a {
   box-shadow: var(--card-shadow);
   transition: all 0.3s ease;
   position: relative;
+  z-index: 1000;
 }
 
 .header::before {
@@ -470,63 +471,148 @@ a {
 
 .dropdown-arrow {
   font-size: 0.75rem;
-  transition: transform 0.2s;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: 999;
 }
 
 .profile-dropdown {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 0.5rem);
   right: 0;
-  background: var(--background);
-  border: 1px solid #e0e0e0;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  min-width: 150px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  margin-top: 0.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  min-width: 280px;
+  box-shadow: var(--card-hover-shadow);
+  z-index: 10000;
+  overflow: visible;
 }
 
-@media (prefers-color-scheme: dark) {
-  .profile-dropdown {
-    border-color: #333;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dropdown-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, 
+    rgba(99, 102, 241, 0.05) 0%, 
+    rgba(236, 72, 153, 0.05) 50%, 
+    rgba(6, 182, 212, 0.05) 100%);
+}
+
+.dropdown-user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dropdown-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  font-weight: 600;
+  box-shadow: var(--card-shadow);
+}
+
+.dropdown-user-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.dropdown-user-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--foreground);
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-user-email {
+  font-size: 0.875rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-content {
+  padding: 0.75rem;
 }
 
 .dropdown-item {
-  display: block;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.25rem;
-  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
   color: var(--foreground);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: left;
 }
 
 .dropdown-item:hover {
-  background-color: #f5f5f5;
+  background-color: var(--surface-hover);
+  color: var(--foreground);
 }
 
-@media (prefers-color-scheme: dark) {
-  .dropdown-item:hover {
-    background-color: #1a1a1a;
-  }
+.dropdown-item.logout-item:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--error);
+}
+
+.dropdown-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
 }
 
 .dropdown-divider {
   height: 1px;
-  background: #e0e0e0;
+  background: var(--border);
   margin: 0.5rem 0;
-}
-
-@media (prefers-color-scheme: dark) {
-  .dropdown-divider {
-    background: #333;
-  }
+  opacity: 0.5;
 }
 
 .main-content {
   flex: 1;
-  padding: 0;
+  padding-top: 1.5rem;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
   overflow-y: auto;
   background: linear-gradient(135deg, 
     rgba(99, 102, 241, 0.03) 0%, 
@@ -958,14 +1044,20 @@ a {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+  width: 100%;
 }
 
 .action-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 0.75rem;
   padding: 1.5rem;
+  width: 100%;
+  height: 140px;
+  min-height: 140px;
+  max-height: 140px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 1rem;
@@ -976,6 +1068,7 @@ a {
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(10px);
+  box-sizing: border-box;
 }
 
 .action-btn::before {
@@ -996,6 +1089,14 @@ a {
 
 .action-btn.view-reports::before {
   background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+}
+
+.quick-actions .action-btn {
+  width: 100% !important;
+  height: 140px !important;
+  min-height: 140px !important;
+  max-height: 140px !important;
+  box-sizing: border-box !important;
 }
 
 .action-btn.settings::before {

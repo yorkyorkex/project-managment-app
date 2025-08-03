@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dashboard App",
-  description: "A modern dashboard application",
+  title: "ProjectHub - Project Management Dashboard",
+  description: "A modern project management dashboard application",
 };
 
 export default function RootLayout({

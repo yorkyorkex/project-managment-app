@@ -29,7 +29,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
       {isOpen && <div className="sidebar-overlay" onClick={onClose} />}
       <aside className={`sidebar ${isOpen ? 'mobile-open' : ''}`}>
         <div className="sidebar-header">
-          <h2>App</h2>
+          <h2>ProjectHub</h2>
           <button className="sidebar-close" onClick={onClose}>
             ✕
           </button>

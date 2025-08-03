@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useReducer, ReactNode, useMemo } from 'react';
+import { createContext, useContext, useReducer, ReactNode, useMemo, useEffect } from 'react';
 
 interface User {
   id: string;
@@ -71,13 +71,41 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export function AppProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
+  // Restore demo user from localStorage on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedDemoUser = localStorage.getItem('demoUser');
+      if (savedDemoUser) {
+        try {
+          const user = JSON.parse(savedDemoUser);
+          dispatch({ type: 'SET_USER', payload: user });
+        } catch {
+          // If parsing fails, clear the invalid data
+          localStorage.removeItem('demoUser');
+        }
+      }
+    }
+  }, []);
+
   const actions = useMemo(() => ({
-    setUser: (user: User) => dispatch({ type: 'SET_USER', payload: user }),
+    setUser: (user: User) => {
+      dispatch({ type: 'SET_USER', payload: user });
+      // Save demo user to localStorage for persistence
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('demoUser', JSON.stringify(user));
+      }
+    },
     setLoading: (loading: boolean) => dispatch({ type: 'SET_LOADING', payload: loading }),
     setError: (error: string | null) => dispatch({ type: 'SET_ERROR', payload: error }),
     setTheme: (theme: 'dark') => dispatch({ type: 'SET_THEME', payload: theme }),
     setNotifications: (enabled: boolean) => dispatch({ type: 'SET_NOTIFICATIONS', payload: enabled }),
-    logout: () => dispatch({ type: 'LOGOUT' })
+    logout: () => {
+      dispatch({ type: 'LOGOUT' });
+      // Clear demo user from localStorage on logout
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('demoUser');
+      }
+    }
   }), []);
 
   const value = useMemo(() => ({

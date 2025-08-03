@@ -6,9 +6,11 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { useApp } from '@/contexts/AppContext';
+import { useRouter } from 'next/navigation';
 
 export default function Dashboard() {
   const { state, actions } = useApp();
+  const router = useRouter();
   const stats = [
     { title: 'Total Users', value: '2,543', change: '+12%', trend: 'up' },
     { title: 'Revenue', value: '$45,231', change: '+8%', trend: 'up' },
@@ -90,28 +92,28 @@ export default function Dashboard() {
             <div className="quick-actions">
               <button 
                 className="action-btn add-user"
-                onClick={() => window.location.href = '/users'}
+                onClick={() => router.push('/users')}
               >
                 <span className="action-icon">👥</span>
                 <span>Add User</span>
               </button>
               <button 
                 className="action-btn view-reports"
-                onClick={() => window.location.href = '/projects'}
+                onClick={() => router.push('/projects')}
               >
                 <span className="action-icon">📊</span>
                 <span>View Reports</span>
               </button>
               <button 
                 className="action-btn settings"
-                onClick={() => window.location.href = '/settings'}
+                onClick={() => router.push('/settings')}
               >
                 <span className="action-icon">⚙️</span>
                 <span>Settings</span>
               </button>
               <button 
                 className="action-btn create-project"
-                onClick={() => window.location.href = '/projects'}
+                onClick={() => router.push('/projects')}
               >
                 <span className="action-icon">📝</span>
                 <span>Create Project</span>

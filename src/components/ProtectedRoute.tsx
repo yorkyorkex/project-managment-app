@@ -26,14 +26,15 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     if (session && !state.user) {
       // Update app context with session data
       actions.setUser({
+        // @ts-expect-error: NextAuth session user doesn't include id by default
         id: session.user?.id || '',
         name: session.user?.name || '',
         email: session.user?.email || '',
-        // @ts-expect-error
+        // @ts-expect-error: NextAuth session user doesn't include role by default
         role: session.user?.role || 'User'
       });
     }
-  }, [status, session?.user?.id, state.user, actions, router]);
+  }, [status, state.user, actions, router, session]);
 
   if (status === 'loading') {
     return (

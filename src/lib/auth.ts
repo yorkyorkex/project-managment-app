@@ -40,8 +40,9 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       if (session.user) {
+        // @ts-expect-error: Adding custom id property to NextAuth session
         session.user.id = token.sub || ""
-        // @ts-expect-error
+        // @ts-expect-error: Adding custom role property to NextAuth session
         session.user.role = token.role || "User"
       }
       return session

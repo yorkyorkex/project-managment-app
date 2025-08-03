@@ -23,15 +23,16 @@ export default function Login() {
     if (session && !state.user) {
       // Update app context with session data only if user is not already set
       actions.setUser({
+        // @ts-expect-error: NextAuth session user doesn't include id by default
         id: session.user?.id || '',
         name: session.user?.name || '',
         email: session.user?.email || '',
-        // @ts-expect-error
+        // @ts-expect-error: NextAuth session user doesn't include role by default
         role: session.user?.role || 'User'
       });
       router.push('/');
     }
-  }, [session?.user?.id, state.user, actions, router]);
+  }, [state.user, actions, router, session]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

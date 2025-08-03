@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useApp } from '@/contexts/AppContext';
 
 interface UseApiState<T> {
@@ -25,7 +25,7 @@ export function useApi<T = unknown>(
     error: null,
   });
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setState(prev => ({ ...prev, isLoading: true, error: null }));
     
     try {
@@ -54,7 +54,7 @@ export function useApi<T = unknown>(
       }));
       actions.setError(errorMessage);
     }
-  };
+  }, [apiFunction, actions]);
 
   const mutate = (newData: T) => {
     setState(prev => ({ ...prev, data: newData }));
@@ -64,7 +64,7 @@ export function useApi<T = unknown>(
     if (immediate) {
       fetchData();
     }
-  }, [fetchData, immediate]);
+  }, [immediate, fetchData]);
 
   return {
     ...state,

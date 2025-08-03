@@ -118,8 +118,8 @@ const Header = ({ onMenuToggle }: HeaderProps) => {
                       fontWeight: '500',
                       transition: 'background-color 0.2s ease'
                     }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--surface-hover)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                    onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = 'var(--surface-hover)'}
+                    onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = 'transparent'}
                     onClick={() => {
                       router.push('/profile');
                       setShowDropdown(false);
@@ -145,8 +145,8 @@ const Header = ({ onMenuToggle }: HeaderProps) => {
                       fontWeight: '500',
                       transition: 'background-color 0.2s ease'
                     }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--surface-hover)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                    onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = 'var(--surface-hover)'}
+                    onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = 'transparent'}
                     onClick={() => {
                       router.push('/settings');
                       setShowDropdown(false);
@@ -172,8 +172,8 @@ const Header = ({ onMenuToggle }: HeaderProps) => {
                       fontWeight: '500',
                       transition: 'background-color 0.2s ease'
                     }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--surface-hover)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                    onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = 'var(--surface-hover)'}
+                    onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = 'transparent'}
                     onClick={() => {
                       router.push('/preferences');
                       setShowDropdown(false);
@@ -201,8 +201,8 @@ const Header = ({ onMenuToggle }: HeaderProps) => {
                       fontWeight: '500',
                       transition: 'background-color 0.2s ease'
                     }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--surface-hover)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                    onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = 'var(--surface-hover)'}
+                    onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = 'transparent'}
                     onClick={() => {
                       router.push('/help');
                       setShowDropdown(false);
@@ -230,8 +230,8 @@ const Header = ({ onMenuToggle }: HeaderProps) => {
                       fontWeight: '500',
                       transition: 'background-color 0.2s ease'
                     }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(239, 68, 68, 0.1)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                    onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = 'rgba(239, 68, 68, 0.1)'}
+                    onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = 'transparent'}
                     onClick={() => {
                       signOut({ callbackUrl: '/login' });
                       actions.logout();

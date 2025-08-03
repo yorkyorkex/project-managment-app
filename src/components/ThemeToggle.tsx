@@ -3,32 +3,14 @@
 import { useTheme } from '@/hooks/useTheme';
 
 const ThemeToggle = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { toggleTheme } = useTheme();
 
   const getThemeIcon = () => {
-    switch (theme) {
-      case 'light':
-        return '☀️';
-      case 'dark':
-        return '🌙';
-      case 'system':
-        return '💻';
-      default:
-        return '🌙';
-    }
+    return '🌙';
   };
 
   const getThemeLabel = () => {
-    switch (theme) {
-      case 'light':
-        return 'Light';
-      case 'dark':
-        return 'Dark';
-      case 'system':
-        return 'System';
-      default:
-        return 'Dark';
-    }
+    return 'Dark';
   };
 
   return (

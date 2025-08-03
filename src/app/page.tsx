@@ -166,7 +166,7 @@ export default function HomePage() {
             Demo credentials: <strong>admin@example.com</strong> / <strong>password</strong>
           </div>
           <div style={{ fontSize: '0.8rem', color: '#475569' }}>
-            ⚡ Or use the "DEMO MODE" button to skip login entirely
+            ⚡ Or use the &quot;DEMO MODE&quot; button to skip login entirely
           </div>
         </div>
       </div>

@@ -12,7 +12,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const pathname = usePathname();
 
   const navItems = [
-    { name: 'Dashboard', href: '/', icon: '📊' },
+    { name: 'Dashboard', href: '/dashboard', icon: '📊' },
     { name: 'Users', href: '/users', icon: '👥' },
     { name: 'Projects', href: '/projects', icon: '📁' },
     { name: 'Settings', href: '/settings', icon: '⚙️' },

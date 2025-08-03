@@ -76,6 +76,30 @@ export default function Login() {
     }
   };
 
+  const handleDirectLogin = async () => {
+    setIsLoading(true);
+    actions.setError(null);
+    
+    try {
+      // Simulate direct login with demo credentials
+      const result = await signIn('credentials', {
+        email: 'admin@example.com',
+        password: 'password',
+        redirect: false,
+      });
+
+      if (result?.error) {
+        actions.setError('Direct login failed');
+      } else {
+        // Session will be handled by useEffect
+      }
+    } catch {
+      actions.setError('An error occurred during direct login');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="login-page">
       <div className="login-container">
@@ -148,6 +172,21 @@ export default function Login() {
             <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
           </svg>
           Continue with Google
+        </Button>
+
+        <Button 
+          onClick={handleDirectLogin}
+          disabled={isLoading}
+          variant="outline"
+          className="direct-login-button"
+          style={{ 
+            marginTop: '1rem',
+            backgroundColor: 'rgba(34, 197, 94, 0.1)',
+            borderColor: 'rgba(34, 197, 94, 0.3)',
+            color: 'rgb(34, 197, 94)'
+          }}
+        >
+          🚀 Demo Login (No Credentials Required)
         </Button>
 
         <div className="signup-link">
